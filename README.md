@@ -257,5 +257,612 @@ driver.quit()
 <img width="1917" height="1078" alt="image" src="https://github.com/user-attachments/assets/c247fff2-1766-4a74-9e67-fb0a2c444fe5" />
 <img width="1917" height="1078" alt="image" src="https://github.com/user-attachments/assets/3541cf4f-a8fd-43a1-b2cb-6f3b8cf29992" />
 
+## Assignment IV
 
+## Project Description
+Selenium Web Automation Testing for Online Shopping Applications
+## code
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+
+# ============================================================
+# BROWSER SETUP
+# ============================================================
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+
+wait = WebDriverWait(driver, 15)
+
+# Delay between actions
+delay = 3
+
+
+# ============================================================
+# TC01 - OPEN SHOPPING WEBSITE
+# ============================================================
+
+driver.get("https://www.saucedemo.com/")
+
+time.sleep(delay)
+
+print("\nTC01 - Shopping website opened")
+
+username = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "user-name")
+    )
+)
+
+time.sleep(1)
+
+username.send_keys("standard_user")
+
+time.sleep(delay)
+
+password = driver.find_element(
+    By.ID,
+    "password"
+)
+
+password.send_keys("secret_sauce")
+
+time.sleep(delay)
+
+login = driver.find_element(
+    By.ID,
+    "login-button"
+)
+
+login.click()
+
+time.sleep(delay)
+
+print("TC01 - Login successful")
+
+
+# ============================================================
+# TC02 - CONFIRMATION ALERT - ACCEPT
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/alerts.html"
+)
+
+time.sleep(delay)
+
+links = driver.find_elements(By.TAG_NAME, "a")
+
+for link in links:
+    if "test confirm" in link.text.lower():
+        link.click()
+        break
+
+time.sleep(delay)
+
+alert = wait.until(
+    EC.alert_is_present()
+)
+
+print("\nTC02 - Confirmation Alert:")
+print(alert.text)
+
+time.sleep(delay)
+
+alert.accept()
+
+time.sleep(delay)
+
+print("TC02 - Alert accepted successfully")
+
+
+# ============================================================
+# TC03 - CONFIRMATION ALERT - DISMISS
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/alerts.html"
+)
+
+time.sleep(delay)
+
+links = driver.find_elements(By.TAG_NAME, "a")
+
+for link in links:
+    if "test confirm" in link.text.lower():
+        link.click()
+        break
+
+time.sleep(delay)
+
+alert = wait.until(
+    EC.alert_is_present()
+)
+
+print("\nTC03 - Confirmation Alert:")
+print(alert.text)
+
+time.sleep(delay)
+
+alert.dismiss()
+
+time.sleep(delay)
+
+print("TC03 - Cancel selected successfully")
+
+
+# ============================================================
+# TC04 - PROMPT ALERT
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/alerts.html"
+)
+
+time.sleep(delay)
+
+links = driver.find_elements(By.TAG_NAME, "a")
+
+for link in links:
+    if "prompt happen" in link.text.lower():
+        link.click()
+        break
+
+time.sleep(delay)
+
+alert = wait.until(
+    EC.alert_is_present()
+)
+
+print("\nTC04 - Prompt Alert:")
+print(alert.text)
+
+time.sleep(delay)
+
+alert.send_keys("Golla Moulidhar")
+
+time.sleep(delay)
+
+print("TC04 - Value entered: Golla Moulidhar")
+
+alert.accept()
+
+time.sleep(delay)
+
+print("TC04 - Prompt submitted successfully")
+
+
+# ============================================================
+# TC05 - MOUSE HOVER
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/mouse_interaction.html"
+)
+
+time.sleep(delay)
+
+element = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "hover")
+    )
+)
+
+time.sleep(2)
+
+print("\nTC05 - Moving mouse to element...")
+
+ActionChains(driver).move_to_element(
+    element
+).perform()
+
+time.sleep(delay)
+
+print("TC05 - Mouse Hover performed")
+
+
+# ============================================================
+# TC06 - DOUBLE CLICK
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/mouse_interaction.html"
+)
+
+time.sleep(delay)
+
+element = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "clickable")
+    )
+)
+
+time.sleep(2)
+
+print("\nTC06 - Performing double click...")
+
+ActionChains(driver).double_click(
+    element
+).perform()
+
+time.sleep(delay)
+
+print("TC06 - Double Click performed")
+
+
+# ============================================================
+# TC07 - DRAG AND DROP
+# ============================================================
+
+driver.get(
+    "https://www.selenium.dev/selenium/web/mouse_interaction.html"
+)
+
+time.sleep(delay)
+
+source = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "draggable")
+    )
+)
+
+target = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "droppable")
+    )
+)
+
+time.sleep(2)
+
+print("\nTC07 - Dragging product...")
+
+ActionChains(driver).drag_and_drop(
+    source,
+    target
+).perform()
+
+time.sleep(delay)
+
+print("TC07 - Drag and Drop performed")
+
+
+# ============================================================
+# TC08 - EXPLICIT WAIT
+# ============================================================
+
+driver.get(
+    "https://www.saucedemo.com/"
+)
+
+time.sleep(delay)
+
+username = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "user-name")
+    )
+)
+
+username.send_keys("standard_user")
+
+time.sleep(2)
+
+password = driver.find_element(
+    By.ID,
+    "password"
+)
+
+password.send_keys("secret_sauce")
+
+time.sleep(2)
+
+login = driver.find_element(
+    By.ID,
+    "login-button"
+)
+
+login.click()
+
+time.sleep(delay)
+
+print("\nTC08 - Login completed")
+
+product = wait.until(
+    EC.visibility_of_element_located(
+        (By.CLASS_NAME, "inventory_item")
+    )
+)
+
+time.sleep(delay)
+
+print("TC08 - Product results loaded successfully")
+
+print("Product:")
+print(product.text)
+
+time.sleep(delay)
+
+
+# ============================================================
+# TC09 - CLICKABLE WAIT
+# ============================================================
+
+add = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "add-to-cart-sauce-labs-backpack")
+    )
+)
+
+time.sleep(2)
+
+print("\nTC09 - Adding product to cart...")
+
+add.click()
+
+time.sleep(delay)
+
+print("TC09 - Product added to cart")
+
+cart = wait.until(
+    EC.element_to_be_clickable(
+        (By.CLASS_NAME, "shopping_cart_link")
+    )
+)
+
+time.sleep(2)
+
+cart.click()
+
+time.sleep(delay)
+
+print("TC09 - Cart opened")
+
+checkout = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "checkout")
+    )
+)
+
+time.sleep(2)
+
+checkout.click()
+
+time.sleep(delay)
+
+print("TC09 - Checkout page opened")
+
+first_name = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "first-name")
+    )
+)
+
+time.sleep(2)
+
+first_name.send_keys("Golla")
+
+time.sleep(2)
+
+driver.find_element(
+    By.ID,
+    "last-name"
+).send_keys("Moulidhar")
+
+time.sleep(2)
+
+driver.find_element(
+    By.ID,
+    "postal-code"
+).send_keys("600001")
+
+time.sleep(delay)
+
+driver.find_element(
+    By.ID,
+    "continue"
+).click()
+
+time.sleep(delay)
+
+place_order = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "finish")
+    )
+)
+
+print("TC09 - Place Order button is clickable")
+
+time.sleep(delay)
+
+place_order.click()
+
+time.sleep(delay)
+
+print("TC09 - Order submitted successfully")
+
+
+# ============================================================
+# TC10 - ORDER CONFIRMATION ALERT
+# ============================================================
+
+driver.get(
+    "https://www.saucedemo.com/"
+)
+
+time.sleep(delay)
+
+username = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "user-name")
+    )
+)
+
+username.send_keys("standard_user")
+
+time.sleep(2)
+
+password = driver.find_element(
+    By.ID,
+    "password"
+)
+
+password.send_keys("secret_sauce")
+
+time.sleep(2)
+
+login = driver.find_element(
+    By.ID,
+    "login-button"
+)
+
+login.click()
+
+time.sleep(delay)
+
+print("\nTC10 - Login completed")
+
+add = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "add-to-cart-sauce-labs-backpack")
+    )
+)
+
+time.sleep(2)
+
+add.click()
+
+time.sleep(delay)
+
+print("TC10 - Product added to cart")
+
+cart = wait.until(
+    EC.element_to_be_clickable(
+        (By.CLASS_NAME, "shopping_cart_link")
+    )
+)
+
+time.sleep(2)
+
+cart.click()
+
+time.sleep(delay)
+
+print("TC10 - Cart opened")
+
+checkout = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "checkout")
+    )
+)
+
+time.sleep(2)
+
+checkout.click()
+
+time.sleep(delay)
+
+first_name = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "first-name")
+    )
+)
+
+first_name.send_keys("Golla")
+
+time.sleep(2)
+
+driver.find_element(
+    By.ID,
+    "last-name"
+).send_keys("Moulidhar")
+
+time.sleep(2)
+
+driver.find_element(
+    By.ID,
+    "postal-code"
+).send_keys("600001")
+
+time.sleep(delay)
+
+driver.find_element(
+    By.ID,
+    "continue"
+).click()
+
+time.sleep(delay)
+
+finish = wait.until(
+    EC.element_to_be_clickable(
+        (By.ID, "finish")
+    )
+)
+
+time.sleep(2)
+
+finish.click()
+
+time.sleep(delay)
+
+print("TC10 - Order completed")
+
+confirmation = wait.until(
+    EC.visibility_of_element_located(
+        (By.CLASS_NAME, "complete-header")
+    )
+)
+
+time.sleep(delay)
+
+print("TC10 - Order confirmation page displayed")
+print("Message:", confirmation.text)
+
+time.sleep(delay)
+
+
+# ============================================================
+# CREATE CONFIRMATION ALERT
+# ============================================================
+
+driver.execute_script("""
+    setTimeout(function() {
+        alert('Order confirmed successfully!');
+    }, 1000);
+""")
+
+time.sleep(2)
+
+alert = wait.until(
+    EC.alert_is_present()
+)
+
+print("TC10 - Confirmation Alert:")
+print(alert.text)
+
+time.sleep(delay)
+
+alert.accept()
+
+time.sleep(delay)
+
+print("TC10 - Confirmation alert handled successfully")
+
+
+# ============================================================
+# ALL TEST CASES COMPLETED
+# ============================================================
+
+print("\n====================================")
+print("ALL 10 TEST CASES COMPLETED")
+print("====================================")
+
+input("\nPress Enter to close browser...")
+
+driver.quit()
+```
 
