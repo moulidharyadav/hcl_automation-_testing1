@@ -866,3 +866,174 @@ input("\nPress Enter to close browser...")
 driver.quit()
 ```
 
+
+
+## Assignment V - Xpath
+## DESCRPITION
+Imagine an online student registration form.
+
+The automation must:
+
+Open the registration page.
+Enter student name.
+Enter password.
+Enter additional information.
+Select dropdown.
+Select checkbox.
+Select radio button.
+Click Submit.
+Verify successful submission.
+
+## CODE
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import time
+
+
+# ==========================================================
+# TC01 - Launch Chrome and Open Registration Page
+# ==========================================================
+
+driver = webdriver.Chrome()
+driver.maximize_window()
+
+wait = WebDriverWait(driver, 15)
+
+driver.get("https://expertdecision.onrender.com/register")
+
+print("TC01 - Registration page opened successfully")
+
+
+# ==========================================================
+# TC02 - Enter Full Name
+# ==========================================================
+
+name = wait.until(
+    EC.visibility_of_element_located(
+        (By.XPATH, "//input[@placeholder='John Doe']")
+    )
+)
+
+name.clear()
+name.send_keys("Golla Moulidhar")
+
+print("TC02 - Full Name entered successfully")
+
+
+# ==========================================================
+# TC03 - Enter Email
+# ==========================================================
+
+email = wait.until(
+    EC.visibility_of_element_located(
+        (By.XPATH, "//input[@placeholder='john@company.com']")
+    )
+)
+
+email.clear()
+email.send_keys("koppalanaveen7@gmail.com")
+
+print("TC03 - Email entered successfully")
+
+
+# ==========================================================
+# TC04 - Enter Password
+# ==========================================================
+
+password = wait.until(
+    EC.visibility_of_element_located(
+        (By.XPATH, "//input[@type='password'][1]")
+    )
+)
+
+password.clear()
+password.send_keys("Naveen0320@")
+
+print("TC04 - Password entered successfully")
+
+
+# ==========================================================
+# TC05 - Enter Confirm Password
+# ==========================================================
+
+confirm_password = wait.until(
+    EC.visibility_of_element_located(
+        (By.ID, "confirm_password")
+    )
+)
+
+confirm_password.clear()
+confirm_password.send_keys("Naveen0320@")
+
+print("TC05 - Confirm Password entered successfully")
+
+
+# ==========================================================
+# TC06 - Select Employee Role
+# ==========================================================
+
+employee = wait.until(
+    EC.element_to_be_clickable(
+        (By.XPATH, "//label[@for='roleEmployee']")
+    )
+)
+
+driver.execute_script(
+    "arguments[0].scrollIntoView({block: 'center'});",
+    employee
+)
+
+time.sleep(1)
+
+employee.click()
+
+print("TC06 - Employee role selected successfully")
+
+
+# ==========================================================
+# TC07 - Click Continue / Submit
+# ==========================================================
+
+continue_button = wait.until(
+    EC.element_to_be_clickable(
+        (By.XPATH, "//button[@id='submitBtn']")
+    )
+)
+
+driver.execute_script(
+    "arguments[0].scrollIntoView({block: 'center'});",
+    continue_button
+)
+
+time.sleep(1)
+
+continue_button.click()
+
+print("TC07 - Continue button clicked successfully")
+
+
+# ==========================================================
+# TC08 - Wait for Email Verification Page
+# ==========================================================
+
+time.sleep(3)
+
+print("TC08 - Email verification page opened")
+
+
+# ==========================================================
+# Keep Browser Open
+# ==========================================================
+
+input("\nPress Enter to close the browser...")
+
+
+# ==========================================================
+# Close Browser
+# ==========================================================
+
+driver.quit()
+
+print("Browser closed successfully")
